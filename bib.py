@@ -73,6 +73,14 @@ class Article(Entry):
         self.optional_fields = ['volume', 'number', 'pages',
                                 'month', 'note', 'key']
 
+                                
+class InCollection(Entry):
+    def __init__(self, input):
+        Entry.__init__(self, input)
+        self.entry_type = 'incollection'
+        self.required_fields = ['author', 'title', 'booktitle', 'year']
+        self.optional_fields = ['editor', 'pages', 'organization', 'publisher', 'address', 'month', 'note', 'key']
+
 
 class InProceedings(Entry):
     def __init__(self, input):
@@ -89,6 +97,8 @@ def parse(input='input.txt'):
     entry_type = data.split('{')[0].lower()
     if entry_type == '@article':
         e = Article(data)
+    elif entry_type == '@incollection':
+        e = InCollection(data)        
     elif entry_type == '@inproceedings':
         e = InProceedings(data)
     else:
